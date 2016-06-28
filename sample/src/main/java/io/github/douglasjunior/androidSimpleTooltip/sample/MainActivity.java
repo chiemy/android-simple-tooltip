@@ -33,6 +33,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.Toast;
 
 import io.github.douglasjunior.androidSimpleTooltip.SimpleTooltip;
 import io.github.douglasjunior.androidSimpleTooltip.SimpleTooltipUtils;
@@ -95,6 +96,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     .anchorView(v)
                     .text(getString(R.string.btn_simple))
                     .gravity(Gravity.END)
+                    .setContentClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Toast.makeText(MainActivity.this, "点击", Toast.LENGTH_LONG).show();
+                        }
+                    })
                     .build()
                     .show();
 

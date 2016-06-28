@@ -108,6 +108,7 @@ public class SimpleTooltip implements PopupWindow.OnDismissListener {
     private final float mArrowHeight;
     private boolean dismissed = false;
     private final int mAnimationStyle;
+    private final View.OnClickListener mOnClickListener;
 
 
     private SimpleTooltip(Builder builder) {
@@ -135,6 +136,7 @@ public class SimpleTooltip implements PopupWindow.OnDismissListener {
         mOnShowListener = builder.onShowListener;
         mRootView = (ViewGroup) mAnchorView.getRootView();
         mAnimationStyle = builder.animationStyle;
+        mOnClickListener = builder.clickListener;
 
         init();
     }
@@ -257,11 +259,19 @@ public class SimpleTooltip implements PopupWindow.OnDismissListener {
         contentViewParams.gravity = Gravity.CENTER;
         mContentView.setLayoutParams(contentViewParams);
 
-        if (mDismissOnInsideTouch || mDismissOnOutsideTouch)
-            mContentView.setOnTouchListener(mPopupWindowTouchListener);
-
         mContentLayout = linearLayout;
         mContentLayout.setVisibility(View.INVISIBLE);
+        if (mOnClickListener != null) {
+            mContentLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dismiss();
+                    mOnClickListener.onClick(v);
+                }
+            });
+        } else if (mDismissOnInsideTouch || mDismissOnOutsideTouch) {
+            mContentView.setOnTouchListener(mPopupWindowTouchListener);
+        }
         mPopupWindow.setContentView(mContentLayout);
     }
 
@@ -536,6 +546,7 @@ public class SimpleTooltip implements PopupWindow.OnDismissListener {
         private float arrowHeight;
         private float arrowWidth;
         private int animationStyle;
+        private View.OnClickListener clickListener;
 
         public Builder(Context context) {
             this.context = context;
@@ -941,6 +952,11 @@ public class SimpleTooltip implements PopupWindow.OnDismissListener {
 
         public Builder setPopupAnimationStyle(int animationStyle) {
             this.animationStyle = animationStyle;
+            return this;
+        }
+
+        public Builder setContentClickListener(View.OnClickListener listener) {
+            clickListener = listener;
             return this;
         }
 
