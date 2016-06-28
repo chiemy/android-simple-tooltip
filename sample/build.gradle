@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "io.github.douglasjunior.androidSimpleTooltip.sample"
-        minSdkVersion 7
+        minSdkVersion 11
         targetSdkVersion 23
         versionCode 1
         versionName "0.0.1"

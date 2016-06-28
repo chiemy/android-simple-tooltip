@@ -107,6 +107,7 @@ public class SimpleTooltip implements PopupWindow.OnDismissListener {
     private final float mArrowWidth;
     private final float mArrowHeight;
     private boolean dismissed = false;
+    private final int mAnimationStyle;
 
 
     private SimpleTooltip(Builder builder) {
@@ -133,6 +134,7 @@ public class SimpleTooltip implements PopupWindow.OnDismissListener {
         mOnDismissListener = builder.onDismissListener;
         mOnShowListener = builder.onShowListener;
         mRootView = (ViewGroup) mAnchorView.getRootView();
+        mAnimationStyle = builder.animationStyle;
 
         init();
     }
@@ -149,6 +151,7 @@ public class SimpleTooltip implements PopupWindow.OnDismissListener {
         mPopupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
         mPopupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         mPopupWindow.setClippingEnabled(false);
+        mPopupWindow.setAnimationStyle(mAnimationStyle);
     }
 
 
@@ -532,6 +535,7 @@ public class SimpleTooltip implements PopupWindow.OnDismissListener {
         private int arrowColor;
         private float arrowHeight;
         private float arrowWidth;
+        private int animationStyle;
 
         public Builder(Context context) {
             this.context = context;
@@ -934,5 +938,11 @@ public class SimpleTooltip implements PopupWindow.OnDismissListener {
             this.onShowListener = onShowListener;
             return this;
         }
+
+        public Builder setPopupAnimationStyle(int animationStyle) {
+            this.animationStyle = animationStyle;
+            return this;
+        }
+
     }
 }

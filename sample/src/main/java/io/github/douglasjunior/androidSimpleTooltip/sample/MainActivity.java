@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             System.out.println("show " + tooltip);
                         }
                     })
+                    .setPopupAnimationStyle(R.style.mypopwindow_anim_style)
                     .build()
                     .show();
 
@@ -166,7 +167,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     .modal(true)
                     .animated(true)
                     .animationDuration(2000)
-                    .animationPadding((int) SimpleTooltipUtils.pxFromDp(50))
                     .contentView(R.layout.tooltip_custom, R.id.tv_text)
                     .build();
 
