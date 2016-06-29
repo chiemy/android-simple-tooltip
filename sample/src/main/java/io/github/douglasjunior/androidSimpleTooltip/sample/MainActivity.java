@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             System.out.println("show " + tooltip);
                         }
                     })
-                    .setPopupAnimationStyle(R.style.mypopwindow_anim_style)
+                    .setPopupAnimationStyle(R.style.TopTipAnimStyle)
                     .build()
                     .show();
 
@@ -102,18 +102,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             Toast.makeText(MainActivity.this, "点击", Toast.LENGTH_LONG).show();
                         }
                     })
+                    .arrowWidth(SimpleTooltipUtils.pxFromDp(12))
+                    .arrowHeight(SimpleTooltipUtils.pxFromDp(7))
                     .build()
                     .show();
 
+
         } else if (v.getId() == R.id.btn_animated) {
-            new SimpleTooltip.Builder(this)
-                    .anchorView(v)
-                    .text(getString(R.string.btn_animated))
-                    .gravity(Gravity.TOP)
+            SimpleTooltipWrap
+                    .topTipBuilder(this, v, getString(R.string.btn_animated), null)
                     .animated(true)
                     .build()
                     .show();
-
         } else if (v.getId() == R.id.btn_overlay) {
             new SimpleTooltip.Builder(this)
                     .anchorView(v)
