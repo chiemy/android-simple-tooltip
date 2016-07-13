@@ -29,6 +29,33 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/et"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+                <View
+                    android:id="@+id/et_anchor"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/et"
+                    android:layout_alignTop="@+id/et"
+                    android:layout_marginLeft="20dp"
+                    />
+
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/btn_et"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:text="@string/btn_simple" />
+
             <Button
                 android:id="@+id/btn_simple"
                 android:layout_width="wrap_content"

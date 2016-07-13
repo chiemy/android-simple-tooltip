@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.btn_no_arrow).setOnClickListener(this);
         findViewById(R.id.btn_custom_arrow).setOnClickListener(this);
         findViewById(R.id.btn_dialog).setOnClickListener(this);
+        findViewById(R.id.btn_et).setOnClickListener(this);
     }
 
     @Override
@@ -94,8 +95,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else if (v.getId() == R.id.btn_simple) {
             new SimpleTooltip.Builder(this)
                     .anchorView(v)
-                    .text(getString(R.string.btn_simple))
-                    .gravity(Gravity.END)
+                    .text("Simples Simples")
+                    .gravity(Gravity.BOTTOM)
                     .setContentClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -104,14 +105,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     })
                     .arrowWidth(SimpleTooltipUtils.pxFromDp(12))
                     .arrowHeight(SimpleTooltipUtils.pxFromDp(7))
+                    .setPopupAnimationStyle(R.style.BottomTipAnimStyle)
                     .build()
                     .show();
 
 
         } else if (v.getId() == R.id.btn_animated) {
             SimpleTooltipWrap
-                    .topTipBuilder(this, v, getString(R.string.btn_animated), null)
+                    .topTipBuilder(this, v, "Animado Animad", null)
                     .animated(true)
+                    .setAlignAnchor(Gravity.START)
                     .build()
                     .show();
         } else if (v.getId() == R.id.btn_overlay) {
@@ -130,6 +133,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     .text(getString(R.string.btn_maxwidth) + getString(R.string.btn_maxwidth) + getString(R.string.btn_maxwidth) + getString(R.string.btn_maxwidth) + getString(R.string.btn_maxwidth))
                     .gravity(Gravity.END)
                     .maxWidth(R.dimen.simpletooltip_max_width)
+                    .setAlignAnchor(Gravity.BOTTOM)
                     .build()
                     .show();
 
@@ -247,6 +251,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     dialog.dismiss();
                 }
             });
+        } else if (v.getId() == R.id.btn_et) {
+            SimpleTooltipWrap
+                    .bottomTipBuilder(this, findViewById(R.id.et_anchor), "稍微有点长", null)
+                    .setAlignAnchor(Gravity.START)
+                    .margin(0f)
+                    .build()
+                    .show();
         }
     }
 }

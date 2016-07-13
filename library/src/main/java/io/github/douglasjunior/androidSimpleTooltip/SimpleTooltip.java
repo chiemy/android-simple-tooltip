@@ -109,6 +109,8 @@ public class SimpleTooltip implements PopupWindow.OnDismissListener {
     private boolean dismissed = false;
     private final int mAnimationStyle;
     private final View.OnClickListener mOnClickListener;
+    private int mALignAnchor;
+    private int mAlignMargin;
 
 
     private SimpleTooltip(Builder builder) {
@@ -137,6 +139,8 @@ public class SimpleTooltip implements PopupWindow.OnDismissListener {
         mRootView = (ViewGroup) mAnchorView.getRootView();
         mAnimationStyle = builder.animationStyle;
         mOnClickListener = builder.clickListener;
+        mALignAnchor = builder.alignAnchor;
+        mAlignMargin = builder.alignMargin;
 
         init();
     }
@@ -188,23 +192,22 @@ public class SimpleTooltip implements PopupWindow.OnDismissListener {
         PointF location = new PointF();
 
         final RectF anchorRect = SimpleTooltipUtils.calculeRectInWindow(mAnchorView);
-        final PointF anchorCenter = new PointF(anchorRect.centerX(), anchorRect.centerY());
 
         switch (mGravity) {
             case Gravity.START:
                 location.x = anchorRect.left - mPopupWindow.getContentView().getWidth() - mMargin;
-                location.y = anchorCenter.y - mPopupWindow.getContentView().getHeight() / 2f;
+                location.y = getLocationYStartEnd(anchorRect);
                 break;
             case Gravity.END:
                 location.x = anchorRect.right + mMargin;
-                location.y = anchorCenter.y - mPopupWindow.getContentView().getHeight() / 2f;
+                location.y = getLocationYStartEnd(anchorRect);
                 break;
             case Gravity.TOP:
-                location.x = anchorCenter.x - mPopupWindow.getContentView().getWidth() / 2f;
+                location.x = getLocationXTopBottom(anchorRect);
                 location.y = anchorRect.top - mPopupWindow.getContentView().getHeight() - mMargin;
                 break;
             case Gravity.BOTTOM:
-                location.x = anchorCenter.x - mPopupWindow.getContentView().getWidth() / 2f;
+                location.x = getLocationXTopBottom(anchorRect);
                 location.y = anchorRect.bottom + mMargin;
                 break;
             default:
@@ -212,6 +215,30 @@ public class SimpleTooltip implements PopupWindow.OnDismissListener {
         }
 
         return location;
+    }
+
+    private float getLocationYStartEnd(RectF anchorRect) {
+        float locationY;
+        if (mALignAnchor == Gravity.TOP) {
+            locationY = anchorRect.top - mAlignMargin;
+        } else if (mALignAnchor == Gravity.BOTTOM) {
+            locationY = anchorRect.bottom - mPopupWindow.getContentView().getHeight() - mAlignMargin;
+        } else {
+            locationY = anchorRect.centerY() - mPopupWindow.getContentView().getHeight() / 2f;
+        }
+        return locationY;
+    }
+
+    private float getLocationXTopBottom(RectF anchorRect) {
+        float locationX;
+        if (mALignAnchor == Gravity.START) {
+            locationX = anchorRect.left + mAlignMargin;
+        } else if (mALignAnchor == Gravity.END) {
+            locationX = anchorRect.right - mPopupWindow.getContentView().getWidth() - mAlignMargin;
+        } else {
+            locationX = anchorRect.centerX() - mPopupWindow.getContentView().getWidth() / 2f;
+        }
+        return locationX;
     }
 
     private void configContentView() {
@@ -547,6 +574,8 @@ public class SimpleTooltip implements PopupWindow.OnDismissListener {
         private float arrowWidth;
         private int animationStyle;
         private View.OnClickListener clickListener;
+        private int alignAnchor = Gravity.CENTER;
+        private int alignMargin;
 
         public Builder(Context context) {
             this.context = context;
@@ -957,6 +986,16 @@ public class SimpleTooltip implements PopupWindow.OnDismissListener {
 
         public Builder setContentClickListener(View.OnClickListener listener) {
             clickListener = listener;
+            return this;
+        }
+
+        public Builder setAlignAnchor(int gravity) {
+            alignAnchor = gravity;
+            return this;
+        }
+
+        public Builder setAlignMargin(int alignMargin) {
+            this.alignMargin = alignMargin;
             return this;
         }
 
